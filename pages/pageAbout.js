@@ -1,20 +1,14 @@
+import { footer } from "../components/footer.js";
+import { head } from "../components/head.js";
+import { header } from "../components/header.js";
+
 export function pageAbout() {
     return `
         <!DOCTYPE html>
         <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>About | Atlyginimai</title>
-        </head>
+        ${head('Apie projekta', ['main', 'header'])}
         <body>
-            <header>
-                <img src="#" alt="Logo">
-                <nav>
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
-                </nav>
-            </header>
+            ${header('/about')}
 
              <main>
                 <h1>Apie projekta</h1>
@@ -29,9 +23,7 @@ export function pageAbout() {
                 </ul>
             </main>
 
-            <footer>
-                Cipyright &copy; 2024
-            </footer>      
+            ${footer()}    
         </body>
         </html>`;
 }

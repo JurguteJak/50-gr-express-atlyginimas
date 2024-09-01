@@ -1,3 +1,30 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+}
+
 header > img {
     height: 2rem;
+    border-radius: 7px;
 }
+
+header > nav {
+    display: flex;
+    align-items: ce;
+    gap: 1rem;
+}
+
+header > nav > a {
+    font-size: 1.2rem;
+    color: #36f;
+    text-decoration: none;
+}
+
+header > nav > a:hover,
+header > nav > a.active {
+    text-decoration: underline;
+    color: #0436ca;
+}
+
