@@ -3,6 +3,7 @@ import { pageHome } from './pages/pageHome.js';
 import { page404 } from './pages/page404.js';
 import { pageAbout } from './pages/pageAbout.js';
 import { pageViewAllAccounts } from './pages/pageViewAllAccounts.js';
+import { pageCreateAccount } from './pages/pageCreateAccount.js';
 
 const app = express();
 const port = 5036;
@@ -15,6 +16,10 @@ app.get('/', (req, res) => {
 
 app.get('/about', (req, res) => {
     return res.send(pageAbout());
+});
+
+app.get('/create-account', (req, res) => {
+    return res.send(pageCreateAccount());
 });
 
 app.get('/accounts', (req, res) => {
