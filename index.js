@@ -10,6 +10,14 @@ const port = 5036;
 
 app.use(express.static('public'));
 
+// app.use((req, res, next) => {
+//     console.log('>>>, req.url');
+//     next();
+// }, (req, res, next) => {
+//     console.log(Date.now());
+//     next();
+// });
+
 app.get('/', (req, res) => {
     return res.send(pageHome());
 });
@@ -26,7 +34,10 @@ app.get('/accounts', (req, res) => {
     return res.send(pageViewAllAccounts());
 });
 
-app.get('*', (req, res) => {
+app.get('*', (req, res, next) => {
+    console.log('---', req.url);
+    next();
+}, (req, res) => {
     return res.send(page404());
 });
 
