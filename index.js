@@ -4,9 +4,15 @@ import { page404 } from './pages/page404.js';
 import { pageAbout } from './pages/pageAbout.js';
 import { pageViewAllAccounts } from './pages/pageViewAllAccounts.js';
 import { pageCreateAccount } from './pages/pageCreateAccount.js';
+import { accountsData } from './data/accountsData.js';
 
 const app = express();
 const port = 5036;
+
+app.use(express.json({
+    type: 'application/json',
+}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
@@ -20,6 +26,20 @@ app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     return res.send(pageHome());
+});
+
+app.post('/api/account', (req, res) => {
+    console.log(req.body);
+
+    accountsData.push({
+        ...req.body,
+        salary: '---',
+    });
+
+    return res.json({
+        status: 'success',
+        message: 'Paskyra sekmingai sukurta',
+    });
 });
 
 app.get('/about', (req, res) => {
