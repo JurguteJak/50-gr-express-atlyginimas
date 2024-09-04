@@ -4,6 +4,7 @@ const nameDOM = inputDOMs[0];
 const dateDOM = inputDOMs[1];
 const rateDOM = inputDOMs[2];
 
+
 formDOM.addEventListener('submit', e => {
     e.preventDefault();
 
