@@ -11,48 +11,62 @@ export function accountPost(req, res) {
         });
     }
 
-    const requiredDataKeysCount = 3;
+    const validation = {
+        name: {
+            func: isName,
+            trans: 'vardas',
+        },
+        date: {
+            func: isDate,
+            trans: 'isidarbinimo data',
+
+        },
+        rate: {
+            func: isRate,
+            trans: 'valandinis atlyginimas',
+        },
+    };
+
+    let sizeErrorMessage = '';
+
+    const keys = Object.keys(validation);
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        sizeErrorMessage += `${key} (${validation[key].trans})`;
+
+        if (keys.length > 1) {
+            if (i === keys.length - 2) {
+                sizeErrorMessage += ' ir ';
+            } else if (i < keys.length - 2) {
+                sizeErrorMessage += ', ';
+            }
+        }
+    }
+
+
+    // sizeErrorMessage = [
+    //     'name (vardas), 
+    //     'date (isidarbinimo data), 
+    //     'rate (valandinis atlyginimas)'
+    // ];
+
+    const requiredDataKeysCount = Object.keys(validation).length;
     if (Object.keys(req.body).length !== requiredDataKeysCount) {
         return res.json({
             status: 'error',
-            message: 'Netinkama duomenu struktura, reikalinga: name (vardas), date (isidarbinimo data), rate (valandinis atlyginimas)',
+            message: 'Netinkama duomenu struktura, reikalinga: ' + sizeErrorMessage,
         });
     }
 
-    const validation = {
-        name: isName,
-        date: isDate,
-        rate: isRate,
-    };
-
-    console.log(validation);
-
-
-    const name = req.body.name;
-    const nameError = isName(name);
-    if (nameError !== '') {
-        return res.json({
-            status: 'error',
-            message: nameError,
-        });
-    }
-
-    const date = req.body.date;
-    const dateError = isDate(date);
-    if (dateError !== '') {
-        return res.json({
-            status: 'error',
-            message: dateError,
-        });
-    }
-
-    const rate = req.body.rate;
-    const rateError = isRate(rate);
-    if (rateError !== '') {
-        return res.json({
-            status: 'error',
-            message: rateError,
-        });
+    for (const key in validation) {
+        const value = req.body[key];
+        const valueError = validation[key].func(value);
+        if (valueError !== '') {
+            return res.json({
+                status: 'error',
+                message: valueError,
+            });
+        }
     }
 
     accountsData.push({
