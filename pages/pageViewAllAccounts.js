@@ -2,20 +2,24 @@ import { footer } from "../components/footer.js";
 import { head } from "../components/head.js";
 import { header } from "../components/header.js";
 import { accountsData } from "../data/accountsData.js";
+import { workingDaysCount } from "../lib/helpers.js";
 
 export function pageViewAllAccounts() {
+    const previousMonth = workingDaysCount(2024, 8);
+    const currentMonth = workingDaysCount(2024, 9);
+
     return `
         <!DOCTYPE html>
         <html lang="en">
         ${head('Visos paskyros', ['main', 'header', 'table', 'button'])}
         <body>
-            ${header('/accounts')}   
+            ${header('/accounts')}
 
             <main>
                 <div class="flex">
                     <h1>Visos paskyros</h1>
                     <a class="btn" href="/create-account">+ Nauja</a>
-                </div>              
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -23,7 +27,8 @@ export function pageViewAllAccounts() {
                             <td>Vardas</td>
                             <td>Isidarbinimo data</td>
                             <td>Valandinis</td>
-                            <td>Atlyginimas</td>
+                            <td>Praeitas menuo</td>
+                            <td>Einamasis menuo</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,10 +38,11 @@ export function pageViewAllAccounts() {
                                 <td>${item.name}</td>
                                 <td>${item.date}</td>
                                 <td>${item.rate}</td>
-                                <td>${item.salary}</td>
-                            </tr>`).join('')};  
+                                <td>${previousMonth} d.d. (${item.rate * previousMonth * 8} Eur)</td>
+                                <td>${currentMonth} d.d. (${item.rate * currentMonth * 8} Eur)</td>
+                            </tr>`).join('')}
                     </tbody>
-                </table>           
+                </table>
             </main>
 
             ${footer()}
